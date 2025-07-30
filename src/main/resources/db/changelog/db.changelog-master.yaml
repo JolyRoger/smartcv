@@ -1,0 +1,250 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0-create-schema
+      author: smartcv
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS smartcv;
+  - changeSet:
+      id: 1-create-users
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 2-create-resumes
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: resumes
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_resumes_users
+                    references: smartcv.users(id)
+                    deleteCascade: true
+              - column:
+                  name: title
+                  type: VARCHAR(150)
+              - column:
+                  name: summary
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 3-create-experiences
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: experiences
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: resume_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_experiences_resumes
+                    references: smartcv.resumes(id)
+                    deleteCascade: true
+              - column:
+                  name: company
+                  type: VARCHAR(100)
+              - column:
+                  name: position
+                  type: VARCHAR(100)
+              - column:
+                  name: start_date
+                  type: DATE
+              - column:
+                  name: end_date
+                  type: DATE
+              - column:
+                  name: description
+                  type: TEXT
+
+  - changeSet:
+      id: 4-create-education
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: education
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: resume_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_education_resumes
+                    references: smartcv.resumes(id)
+                    deleteCascade: true
+              - column:
+                  name: institution
+                  type: VARCHAR(100)
+              - column:
+                  name: degree
+                  type: VARCHAR(100)
+              - column:
+                  name: field_of_study
+                  type: VARCHAR(100)
+              - column:
+                  name: start_date
+                  type: DATE
+              - column:
+                  name: end_date
+                  type: DATE
+              - column:
+                  name: description
+                  type: TEXT
+
+  - changeSet:
+      id: 5-create-skills
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: skills
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: resume_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_skills_resumes
+                    references: smartcv.resumes(id)
+                    deleteCascade: true
+              - column:
+                  name: skill_name
+                  type: VARCHAR(100)
+
+  - changeSet:
+      id: 6-create-job-descriptions
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: job_descriptions
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_jobs_users
+                    references: smartcv.users(id)
+                    deleteCascade: true
+              - column:
+                  name: title
+                  type: VARCHAR(150)
+              - column:
+                  name: content
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 7-create-ai-analysis-results
+      author: smartcv
+      changes:
+        - createTable:
+            schemaName: smartcv
+            tableName: ai_analysis_results
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: resume_id
+                  type: INTEGER
+                  constraints:
+                    foreignKeyName: fk_analysis_resume
+                    references: smartcv.resumes(id)
+                    deleteCascade: true
+              - column:
+                  name: job_description_id
+                  type: INTEGER
+                  constraints:
+                    foreignKeyName: fk_analysis_jobdesc
+                    references: smartcv.job_descriptions(id)
+              - column:
+                  name: analysis_type
+                  type: VARCHAR(50)
+              - column:
+                  name: result
+                  type: TEXT
+              - column:
+                  name: score
+                  type: INTEGER
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP

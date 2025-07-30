@@ -1,0 +1,50 @@
+plugins {
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.liquibase.gradle' version "2.2.2"
+    id 'java'
+}
+
+group = 'com.smartresume'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '21'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // --- Spring Boot ---
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // --- OpenAI Integration ---
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names'
+
+    // --- PostgreSQL Driver ---
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // --- Liquibase ---
+    implementation 'org.liquibase:liquibase-core'
+    liquibaseRuntime 'org.liquibase:liquibase-core'
+    liquibaseRuntime 'org.postgresql:postgresql'
+    liquibaseRuntime 'ch.qos.logback:logback-core'
+    liquibaseRuntime 'ch.qos.logback:logback-classic'
+
+    // --- Lombok ---
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // --- DevTools (Optional) ---
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // --- Testing (Optional) ---
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

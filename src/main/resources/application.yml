@@ -1,0 +1,20 @@
+openai:
+  api:
+    key: ${OPENAI_KEY}
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: torquemada
+    password: surgery
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+    contexts: development
+    default-schema: smartcv
+    drop-first: false       # Set to true only if you want to drop all tables first (for dev)
+    parameters:
+      schema: smartcv
