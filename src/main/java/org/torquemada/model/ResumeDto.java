@@ -1,3 +1,3 @@
 package org.torquemada.model;
 
-public record ResumeDto(String name, String content) { }
+public record ResumeDto(Long id, Long userId, String title, String summary) { }
