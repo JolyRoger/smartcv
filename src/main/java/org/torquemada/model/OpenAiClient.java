@@ -24,6 +24,7 @@ public class OpenAiClient {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
+        log.info("OpenAI key = {}", apiKey);
         OpenAiRequest request = new OpenAiRequest(prompt);
 
         OpenAiResponse response = webClient.post()
