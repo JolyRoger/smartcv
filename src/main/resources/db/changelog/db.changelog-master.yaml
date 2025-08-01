@@ -1,11 +1,5 @@
 databaseChangeLog:
   - changeSet:
-      id: 0-create-schema
-      author: smartcv
-      changes:
-        - sql:
-            sql: CREATE SCHEMA IF NOT EXISTS smartcv;
-  - changeSet:
       id: 1-create-users
       author: smartcv
       changes:

@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,13 +18,21 @@ import java.util.List;
 @Table(name = "users", schema = "smartcv")
 public class User {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @Getter
     private String name;
+    @Setter
+    @Getter
     private String email;
+    @Setter
+    @Getter
     private String passwordHash;
 
+    @Setter
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.torquemada.entity.Resume;
 import org.torquemada.model.AIAnalysisResultDto;
 import org.torquemada.model.MatchRequestDto;
-import org.torquemada.model.ResumeDto;
+import org.torquemada.dto.ResumeDto;
 import org.torquemada.service.ResumeService;
 
 @RestController

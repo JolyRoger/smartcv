@@ -2,12 +2,17 @@ openai:
   api:
     key: ${openai-key}
 spring:
+  security:
+    user:
+      name: admin
+      password: surgery
+#      password: ${application-password}
   datasource:
 #    url: jdbc:postgresql://localhost:5432/postgres
 #    username: torquemada
 #    password: surgery
     driverClassName: org.h2.Driver
-    url: jdbc:h2:file:~/smartcv;AUTO_SERVER=TRUE;DATABASE_TO_LOWER=TRUE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS smartcv
+    url: jdbc:h2:file:~/smartresume;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;AUTO_SERVER=TRUE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS smartcv
     username: sa
     password:
   jpa:

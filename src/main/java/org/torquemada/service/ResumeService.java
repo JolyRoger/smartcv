@@ -8,7 +8,7 @@ import org.torquemada.entity.User;
 import org.torquemada.model.AIAnalysisResultDto;
 import org.torquemada.model.MatchRequestDto;
 import org.torquemada.model.OpenAiClient;
-import org.torquemada.model.ResumeDto;
+import org.torquemada.dto.ResumeDto;
 import org.torquemada.repository.ResumeRepository;
 import org.torquemada.repository.UserRepository;
 
