@@ -23,8 +23,8 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
     private final UserRepository userRepository;
 
-    public ResumeDto createResume(ResumeDto resumeDto) {
-        return resumeDto;
+    public Resume createResume(ResumeDto resumeDto) {
+        return saveResume(resumeDto);
     }
 
     public Resume saveResume(ResumeDto dto) {

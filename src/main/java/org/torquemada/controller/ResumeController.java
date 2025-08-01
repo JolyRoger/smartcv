@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.torquemada.entity.Resume;
 import org.torquemada.model.AIAnalysisResultDto;
 import org.torquemada.model.MatchRequestDto;
 import org.torquemada.model.ResumeDto;
@@ -19,7 +20,7 @@ public class ResumeController {
     private final ResumeService resumeService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResumeDto> createResume(@RequestBody ResumeDto resumeDto) {
+    public ResponseEntity<Resume> createResume(@RequestBody ResumeDto resumeDto) {
         return ResponseEntity.ok(resumeService.createResume(resumeDto));
     }
 
