@@ -10,6 +10,7 @@ import org.torquemada.dto.UserResponseDto;
 import org.torquemada.entity.User;
 import org.torquemada.repository.UserRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -19,20 +20,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponseDto createUser(UserDto userDto) {
-        if (userRepository.findByEmail(userDto.email()).isPresent()) {
-            throw new IllegalArgumentException("Email already in use");
-        }
+    public Optional<UserResponseDto> createUser(UserDto userDto) {
+        final User[] user = { null };
 
-        User user = new User();
-        user.setName(userDto.name());
-        user.setEmail(userDto.email());
-        user.setPasswordHash(passwordEncoder.encode(userDto.password()));
-        user.setCreatedAt(LocalDateTime.now());
+        userRepository.findByEmail(userDto.email()).ifPresentOrElse(existingUser -> { },
+                () -> {
+                    user[0] = new User();
+                    user[0].setName(userDto.name());
+                    user[0].setEmail(userDto.email());
+                    user[0].setPasswordHash(passwordEncoder.encode(userDto.password()));
+                    user[0].setCreatedAt(LocalDateTime.now());
+                    user[0] = userRepository.save(user[0]);
+                });
 
-        user = userRepository.save(user);
-
-        return new UserResponseDto(user.getId(), user.getName(), user.getEmail());
+        return Optional.ofNullable(user[0]).map(newUser -> new UserResponseDto(newUser.getId(), newUser.getName(), newUser.getEmail()));
     }
 
     public UserResponseDto login(UserLoginDto loginDto) {

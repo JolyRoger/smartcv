@@ -9,8 +9,10 @@ import org.torquemada.model.AIAnalysisResultDto;
 import org.torquemada.model.MatchRequestDto;
 import org.torquemada.model.OpenAiClient;
 import org.torquemada.dto.ResumeDto;
+import org.torquemada.model.OpenAiResponse;
 import org.torquemada.repository.ResumeRepository;
 import org.torquemada.repository.UserRepository;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
@@ -41,17 +43,17 @@ public class ResumeService {
         return resumeRepository.save(resume);
     }
 
-    public AIAnalysisResultDto analyzeResumeWithAI(ResumeDto resumeDto) {
+    public Mono<AIAnalysisResultDto> analyzeResumeWithAI(ResumeDto resumeDto) {
         log.info("CV Name={}", resumeDto.title());
         log.info("CV Content={}", resumeDto.summary());
-        String prompt = "Please analyze the following resume: " + resumeDto.title() + "\n" + resumeDto.summary();
-        String aiResponse = openAiClient.callOpenAi(prompt);
-        return new AIAnalysisResultDto(aiResponse);
+        String prompt = String.format("Please explain the following sentence: \"%s\"", resumeDto.summary());
+        Mono<OpenAiResponse> aiResponse = openAiClient.callOpenAi(prompt);
+        return aiResponse.map(response -> new AIAnalysisResultDto(response.getFirstResponse()));
     }
 
-    public AIAnalysisResultDto matchWithJobDescription(MatchRequestDto matchRequest) {
+    public Mono<AIAnalysisResultDto> matchWithJobDescription(MatchRequestDto matchRequest) {
         String prompt = String.format("Compare resume: %s with job description: %s", matchRequest.resume(), matchRequest.jobDescription());
-        String aiResponse = openAiClient.callOpenAi(prompt);
-        return new AIAnalysisResultDto(aiResponse);
+        Mono<OpenAiResponse> aiResponse = openAiClient.callOpenAi(prompt);
+        return aiResponse.map(response -> new AIAnalysisResultDto(response.getFirstResponse()));
     }
 }
