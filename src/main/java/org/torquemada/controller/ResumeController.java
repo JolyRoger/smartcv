@@ -3,6 +3,7 @@ package org.torquemada.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +29,10 @@ public class ResumeController {
     public Mono<String> fortune() {
         var sentence = FortuneGenerator.sentence();
         log.info("Explain <{}>", sentence);
-        var prompt = String.format("Please explain the sense of the following sentence: \"%s\"", sentence);
-        var resumeDto = new ResumeDto(0L, 0L, "", prompt);
-        return resumeService.analyzeResumeWithAI(resumeDto).map(AIAnalysisResultDto::analysis);
+        return Mono.just(sentence);
+//        var prompt = String.format("Please explain the sense of the following sentence: \"%s\"", sentence);
+//        var resumeDto = new ResumeDto(0L, 0L, "", prompt);
+//        return resumeService.analyzeResumeWithAI(resumeDto).map(AIAnalysisResultDto::analysis);
     }
 
     @PostMapping("/create")

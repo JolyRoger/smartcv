@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -19,10 +22,26 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public CorsWebFilter corsWebFilter() {
+//        var corsConfig = new CorsConfiguration();
+//        corsConfig.addAllowedOrigin("*");
+//        corsConfig.addAllowedMethod("*");
+//        corsConfig.addAllowedHeader("*");
+//        corsConfig.setAllowCredentials(true);
+//
+//        var source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("*", corsConfig);
+//
+//        return new CorsWebFilter(source);
+//    }
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
-            .authorizeExchange(ex -> ex.anyExchange().authenticated() /* all routes require authentication */)
+            .authorizeExchange(ex -> ex.
+                    pathMatchers("/api/**").authenticated().
+                    anyExchange().permitAll())
             .httpBasic(Customizer.withDefaults()) // enable HTTP Basic auth
             .csrf(ServerHttpSecurity.CsrfSpec::disable) // disable CSRF for APIs
             .build();
