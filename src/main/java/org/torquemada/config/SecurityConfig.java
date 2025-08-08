@@ -2,6 +2,7 @@ package org.torquemada.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -22,26 +23,26 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public CorsWebFilter corsWebFilter() {
-//        var corsConfig = new CorsConfiguration();
-//        corsConfig.addAllowedOrigin("*");
-//        corsConfig.addAllowedMethod("*");
-//        corsConfig.addAllowedHeader("*");
-//        corsConfig.setAllowCredentials(true);
-//
-//        var source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("*", corsConfig);
-//
-//        return new CorsWebFilter(source);
-//    }
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        var corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("http://localhost:5173");
+        corsConfig.addAllowedMethod(HttpMethod.GET);
+        corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
+
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsWebFilter(source);
+    }
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
             .authorizeExchange(ex -> ex.
-                    pathMatchers("/api/**").authenticated().
-                    anyExchange().permitAll())
+                    pathMatchers(HttpMethod.OPTIONS, "/**").permitAll().
+                    anyExchange().authenticated())
             .httpBasic(Customizer.withDefaults()) // enable HTTP Basic auth
             .csrf(ServerHttpSecurity.CsrfSpec::disable) // disable CSRF for APIs
             .build();
