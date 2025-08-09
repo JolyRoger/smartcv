@@ -6,10 +6,10 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 
 @EnableWebFlux
 @SpringBootApplication
-public class SmartResumeApplication {
+public class FortuneServiceMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(SmartResumeApplication.class, args);
+        SpringApplication.run(FortuneServiceMain.class, args);
     }
 
 }

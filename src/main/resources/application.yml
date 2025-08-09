@@ -1,28 +1,7 @@
-openai:
-  api:
-    key: ${openai-key}
+server:
+  port: 8090
 spring:
   security:
     user:
       name: admin
       password: ${application-password}
-  datasource:
-#    url: jdbc:postgresql://localhost:5432/postgres
-#    username: torquemada
-#    password: surgery
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:file:~/smartresume;DB_CLOSE_DELAY=-1;CASE_INSENSITIVE_IDENTIFIERS=TRUE;AUTO_SERVER=TRUE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS fortune
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
-    enabled: true
-    contexts: development
-    default-schema: fortune
-    drop-first: false       # Set to true only if you want to drop all tables first (for dev)
-    parameters:
-      schema: fortune
