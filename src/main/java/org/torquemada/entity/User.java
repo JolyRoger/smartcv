@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "users", schema = "smartcv")
+@Table(name = "users", schema = "fortune")
 public class User {
     @Id
     @Getter

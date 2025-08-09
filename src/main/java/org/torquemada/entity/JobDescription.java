@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "job_descriptions", schema = "smartcv")
+@Table(name = "job_descriptions", schema = "fortune")
 public class JobDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ai_analysis_results", schema = "smartcv")
+@Table(name = "ai_analysis_results", schema = "fortune")
 public class AiAnalysisResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

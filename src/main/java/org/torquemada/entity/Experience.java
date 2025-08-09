@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "experiences", schema = "smartcv")
+@Table(name = "experiences", schema = "fortune")
 public class Experience {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

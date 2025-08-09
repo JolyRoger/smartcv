@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: 1-create-users
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: users
             columns:
               - column:
@@ -35,10 +35,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 2-create-resumes
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: resumes
             columns:
               - column:
@@ -52,7 +52,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_resumes_users
-                    references: smartcv.users(id)
+                    references: fortune.users(id)
                     deleteCascade: true
               - column:
                   name: title
@@ -71,10 +71,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 3-create-experiences
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: experiences
             columns:
               - column:
@@ -88,7 +88,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_experiences_resumes
-                    references: smartcv.resumes(id)
+                    references: fortune.resumes(id)
                     deleteCascade: true
               - column:
                   name: company
@@ -108,10 +108,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 4-create-education
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: education
             columns:
               - column:
@@ -125,7 +125,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_education_resumes
-                    references: smartcv.resumes(id)
+                    references: fortune.resumes(id)
                     deleteCascade: true
               - column:
                   name: institution
@@ -148,10 +148,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 5-create-skills
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: skills
             columns:
               - column:
@@ -165,7 +165,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_skills_resumes
-                    references: smartcv.resumes(id)
+                    references: fortune.resumes(id)
                     deleteCascade: true
               - column:
                   name: skill_name
@@ -173,10 +173,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 6-create-job-descriptions
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: job_descriptions
             columns:
               - column:
@@ -190,7 +190,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_jobs_users
-                    references: smartcv.users(id)
+                    references: fortune.users(id)
                     deleteCascade: true
               - column:
                   name: title
@@ -205,10 +205,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 7-create-ai-analysis-results
-      author: smartcv
+      author: fortune
       changes:
         - createTable:
-            schemaName: smartcv
+            schemaName: fortune
             tableName: ai_analysis_results
             columns:
               - column:
@@ -221,14 +221,14 @@ databaseChangeLog:
                   type: INTEGER
                   constraints:
                     foreignKeyName: fk_analysis_resume
-                    references: smartcv.resumes(id)
+                    references: fortune.resumes(id)
                     deleteCascade: true
               - column:
                   name: job_description_id
                   type: INTEGER
                   constraints:
                     foreignKeyName: fk_analysis_jobdesc
-                    references: smartcv.job_descriptions(id)
+                    references: fortune.job_descriptions(id)
               - column:
                   name: analysis_type
                   type: VARCHAR(50)
